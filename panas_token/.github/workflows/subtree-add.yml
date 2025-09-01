@@ -1,0 +1,85 @@
+name: Subtree Add
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo_url:
+        description: 'Git URL of the repository to add'
+        required: true
+        type: string
+      prefix:
+        description: 'Destination prefix (e.g., integrations/REPO)'
+        required: true
+        type: string
+      branch:
+        description: 'Source branch (default: detect remote HEAD)'
+        required: false
+        type: string
+      squash:
+        description: 'Use --squash for subtree add'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  add:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "panas-bot"
+          git config user.email "devnull+panas@users.noreply.github.com"
+
+      - name: Create work branch
+        id: branch
+        run: |
+          BR="add/subtree-${GITHUB_RUN_ID}"
+          git checkout -B "$BR"
+          echo "branch=$BR" >> $GITHUB_OUTPUT
+
+      - name: Subtree add
+        id: add
+        env:
+          URL: ${{ inputs.repo_url }}
+          PREFIX: ${{ inputs.prefix }}
+          SRC_BRANCH: ${{ inputs.branch }}
+          SQUASH: ${{ inputs.squash }}
+        run: |
+          set -euo pipefail
+          remote="up_add"
+          git remote remove "$remote" 2>/dev/null || true
+          git remote add "$remote" "$URL"
+          git fetch "$remote" --tags --prune
+          if [ -z "$SRC_BRANCH" ]; then
+            SRC_BRANCH=$(git ls-remote --symref "$remote" HEAD | awk '/^ref:/ {print $2}' | sed 's#refs/heads/##')
+            [ -z "$SRC_BRANCH" ] && SRC_BRANCH=main
+          fi
+          [ "${SQUASH}" = "true" ] && sq="--squash" || sq=""
+          git subtree add --prefix="$PREFIX" "$remote" "$SRC_BRANCH" $sq -m "chore(subtree): add $URL ($SRC_BRANCH) -> $PREFIX"
+          echo "src_branch=$SRC_BRANCH" >> $GITHUB_OUTPUT
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore(subtree): add repository via workflow'
+          title: 'Subtree add: ${{ inputs.repo_url }}'
+          body: |
+            Added as subtree:
+            - Repo: ${{ inputs.repo_url }}
+            - Branch: ${{ steps.add.outputs.src_branch }}
+            - Prefix: ${{ inputs.prefix }}
+            - Squash: ${{ inputs.squash }}
+          branch: ${{ steps.branch.outputs.branch }}
+          base: main
+          delete-branch: false
+

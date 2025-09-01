@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+      - '.vscode/**'
+      - '.idea/**'
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  panas-pay-contracts-validate:
+    name: Run panas-pay-contracts release
+    secrets: inherit
+    uses: ./.github/workflows/panas-pay-contracts-ci.yaml
+
+  panas-pay-contracts-release:
+    name: Run panas-pay-contracts release
+    secrets: inherit
+    uses: ./.github/workflows/panas-pay-contracts-cd.yaml
+    needs: panas-pay-contracts-validate
+
+  panas-pay-frontend-validate:
+    name: Run panas-pay-frontend release
+    secrets: inherit
+    uses: ./.github/workflows/panas-pay-frontend-ci.yaml
+
+  panas-pay-frontend-release:
+    name: Run panas-pay-frontend release
+    secrets: inherit
+    uses: ./.github/workflows/panas-pay-frontend-cd.yaml
+    needs: panas-pay-frontend-validate

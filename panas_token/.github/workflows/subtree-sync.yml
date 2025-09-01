@@ -1,0 +1,122 @@
+name: Subtree Sync
+
+on:
+  workflow_dispatch:
+    inputs:
+      squash:
+        description: 'Use --squash for subtree merges'
+        required: false
+        type: boolean
+        default: false
+  schedule:
+    - cron: '17 3 * * 2'  # Tuesdays 03:17 UTC
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "panas-bot"
+          git config user.email "devnull+panas@users.noreply.github.com"
+
+      - name: Define matrix via env (PANAS repos)
+        id: define
+        run: |
+          echo "repos<<EOF" >> $GITHUB_OUTPUT
+          cat <<JSON >> $GITHUB_OUTPUT
+          [
+            {
+              "name": "PANAS-TOKEN",
+              "remote": "up_panas_token",
+              "url": "https://github.com/panacea-icono/PANAS-TOKEN.git",
+              "prefix": "integrations/PANAS-TOKEN"
+            },
+            {
+              "name": "panas-token.M",
+              "remote": "up_panas_token_m",
+              "url": "https://github.com/panacea-icono/panas-token.M.git",
+              "prefix": "integrations/panas-token.M"
+            }
+          ]
+JSON
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create work branch
+        id: branch
+        run: |
+          BR="sync/subtrees-${GITHUB_RUN_ID}"
+          git checkout -B "$BR"
+          echo "branch=$BR" >> $GITHUB_OUTPUT
+
+      - name: Sync subtrees
+        env:
+          REPOS: ${{ steps.define.outputs.repos }}
+          SQUASH: ${{ inputs.squash }}
+        run: |
+          set -euo pipefail
+          squash_flag=""
+          if [ "${SQUASH}" = "true" ]; then squash_flag="--squash"; fi
+
+          sync_one() {
+            local name="$1" remote="$2" url="$3" prefix="$4"
+            echo "::group::Sync $name ($url) -> $prefix"
+            git remote remove "$remote" 2>/dev/null || true
+            git remote add "$remote" "$url"
+            git fetch "$remote" --tags --prune
+            # detect default branch
+            def=$(git ls-remote --symref "$remote" HEAD | awk '/^ref:/ {print $2}' | sed 's#refs/heads/##')
+            [ -z "$def" ] && def=main
+            echo "Using branch: $def"
+            # ensure prefix exists (subtree add if missing)
+            if [ ! -d "$prefix" ]; then
+              git subtree add --prefix="$prefix" "$remote" "$def" $squash_flag -m "chore(subtree): add $name ($def)"
+            else
+              git subtree pull --prefix="$prefix" "$remote" "$def" $squash_flag -m "chore(subtree): sync $name ($def)"
+            fi
+            echo "::endgroup::"
+          }
+
+          # parse JSON with node (available on runner)
+          node -e '
+            const { execSync } = require("child_process");
+            const repos = JSON.parse(process.env.REPOS);
+            for (const r of repos) {
+              const cmd = `bash -lc "sync_one \'${r.name.replace(/"/g, "\\\"")}\' \'${r.remote}\' \'${r.url}\' \'${r.prefix}\'"`;
+              execSync(cmd, { stdio: "inherit" });
+            }
+          '
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet && git diff --staged --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request
+        if: steps.diff.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore(subtree): sync upstream repos'
+          title: 'Subtree sync: PANAS-TOKEN + panas-token.M'
+          body: |
+            Automated subtree sync.
+            - PANAS-TOKEN -> integrations/PANAS-TOKEN
+            - panas-token.M -> integrations/panas-token.M
+          branch: ${{ steps.branch.outputs.branch }}
+          base: main
+          delete-branch: false
+
