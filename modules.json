@@ -1,0 +1,48 @@
+{
+  "app": {
+    "repo": "https://github.com/panacea-icono/fibonacci_app",
+    "path": "app",
+    "port": 8000
+  },
+  "lab": {
+    "repo": "https://github.com/panacea-icono/fibonacci_lab",
+    "path": "lab",
+    "port": 8001
+  },
+  "gpts_medicos": {
+    "repo": "https://github.com/panacea-icono/gpts_medicos",
+    "path": "gpts_medicos",
+    "port": 8002
+  },
+  "tokenization_panas": {
+    "repo": "https://github.com/panacea-icono/panas_token",
+    "path": "tokenization/panas_token",
+    "port": 8010
+  },
+  "tokenization_vaser": {
+    "repo": "https://github.com/panacea-icono/vaser_token",
+    "path": "tokenization/vaser_token",
+    "port": 8011
+  },
+  "external_asistente_medico": {
+    "repo": "https://github.com/elmerpuma/Asistente-Medico-IA",
+    "path": "external/Asistente-Medico-IA",
+    "port": 8100
+  },
+  "external_awesome_ia": {
+    "repo": "https://github.com/IAARhub/awesome-ia",
+    "path": "external/awesome-ia",
+    "port": 8101
+  },
+  "external_simulacion_flujo_hospitalario": {
+    "repo": "https://github.com/OswaldoCG/simulacion-flujo-hospitalario",
+    "path": "external/simulacion-flujo-hospitalario",
+    "port": 8102
+  },
+  "external_tfg_duna": {
+    "repo": "https://github.com/SurgicalRoboticsUMA/TFG_Duna",
+    "path": "external/TFG_Duna",
+    "port": 8103
+  }
+}
+
