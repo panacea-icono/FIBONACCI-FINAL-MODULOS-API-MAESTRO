@@ -293,6 +293,7 @@ npm run test:wallet
 ## 🎉 **¡INTEGRACIÓN COMPLETA!**
 
 Con esta integración, tienes un ecosistema completo de finanzas descentralizadas que combina:
+
 - **Wallet segura** para transacciones P2P
 - **Token estable** respaldado por activos reales
 - **Sistema de reputación** para confianza
