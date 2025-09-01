@@ -87,6 +87,17 @@ Conclusión: El flujo implementado permite una rápida integración, despliegue 
 - Generar docker-compose: `python3 scripts/generate_docker_compose.py`.
 - Levantar servicios: `docker compose up -d`.
 
+## Conexión con Hugging Face
+
+- Configura tu token en `.env` como `HF_TOKEN=` o `HUGGINGFACE_TOKEN=`.
+- Lista tus activos (modelos, datasets y Spaces):
+  - `python3 scripts/hf_connect.py list`
+- Descargar un modelo/dataset/space concreto:
+  - `python3 scripts/hf_connect.py download --type model --id ORG/NOMBRE`
+  - `python3 scripts/hf_connect.py download --type dataset --id ORG/NOMBRE`
+  - `python3 scripts/hf_connect.py download --type space --id ORG/NOMBRE`
+- Descargas se guardan bajo `external/hf/<tipo>/ORG__NOMBRE`.
+
 ## Repositorios y Enlaces Útiles
 
 A continuación, una lista curada de repositorios y recursos que puedes clonar o agregar como submódulos en los ámbitos de IA médica, simulación 3D y cirugía plástica.
