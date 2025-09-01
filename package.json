@@ -1,0 +1,10 @@
+{
+  "name": "telegram-openai-hook",
+  "version": "1.0.0",
+  "main": "telegram_openai_hook.js",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.61.0",
+    "openai": "^4.0.0",
+    "@huggingface/inference": "^2.6.0"
+  }
+}
