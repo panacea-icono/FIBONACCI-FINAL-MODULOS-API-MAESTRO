@@ -48,7 +48,7 @@ class FibonacciEnvGenerator:
     def generate_env_content(self) -> str:
         now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         content = [
-            f"# 🚀 FIBONACCI FINAL MODULOS API COMPLETO",
+            "# 🚀 FIBONACCI FINAL MODULOS API COMPLETO",
             f"# Generado automáticamente: {now}",
             "",
             "# ============================================================================",
@@ -387,4 +387,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

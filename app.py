@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
+
 def fibonacci(n):
     if n <= 0:
         return []
@@ -9,6 +10,7 @@ def fibonacci(n):
     while len(sequence) < n:
         sequence.append(sequence[-1] + sequence[-2])
     return sequence[:n]
+
 
 @app.route('/api/fibonacci', methods=['GET'])
 def get_fibonacci():
@@ -18,6 +20,7 @@ def get_fibonacci():
         return jsonify({'fibonacci': result})
     except Exception as e:
         return jsonify({'error': str(e)}), 400
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

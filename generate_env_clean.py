@@ -11,19 +11,19 @@ IMPORTANTE: Este script NO contiene tokens reales.
 Los tokens deben ser configurados manualmente en el archivo .env
 """
 
-import os
 import json
 from pathlib import Path
 from datetime import datetime
 
+
 class FibonacciEnvGenerator:
     """Generador de archivo .env para Fibonacci API"""
-    
+
     def __init__(self):
         self.project_root = Path("/Users/kuchimac/FIBONACCI_FINAL_MODULOS_API_COMPLETO")
         self.env_file_path = self.project_root / ".env"
         self.modules_config = self._load_modules_config()
-        
+
     def _load_modules_config(self):
         """Carga la configuración de módulos desde modules.json"""
         modules_file = self.project_root / "modules.json"
@@ -31,10 +31,10 @@ class FibonacciEnvGenerator:
             with open(modules_file, 'r', encoding='utf-8') as f:
                 return json.load(f)
         return {}
-    
+
     def generate_env_content(self):
         """Genera el contenido completo del archivo .env"""
-        
+
         env_content = f"""# 🚀 FIBONACCI FINAL MODULOS API COMPLETO
 # Configuración de entorno unificada para la API médica
 # Generado automáticamente el: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
@@ -125,7 +125,7 @@ HEROKU_APP_NAME="fibonacci-maestro"
 # MÓDULOS DE LA API - Puertos y URLs (Generados automáticamente)
 # ============================================================================
 """
-        
+
         # Agregar configuración de módulos desde modules.json
         if self.modules_config:
             for module_name, module_info in self.modules_config.items():
@@ -135,7 +135,7 @@ HEROKU_APP_NAME="fibonacci-maestro"
 {module_name.upper()}_PORT={port}
 {module_name.upper()}_URL="http://localhost:{port}"
 """
-        
+
         env_content += """
 # ============================================================================
 # BASE DE DATOS
@@ -364,3 +364,6 @@ RATE_LIMIT_BLOCK_DURATION=1800
 # 3. Mantén las claves API seguras
 # 4. Ajusta los puertos si hay conflictos
 # 5. Configura las bases de datos según tu entorno
+        """
+
+        return env_content

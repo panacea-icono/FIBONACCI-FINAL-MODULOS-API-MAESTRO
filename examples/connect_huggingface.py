@@ -13,4 +13,3 @@ HF_TOKEN = os.getenv("HF_TOKEN")
 api = InferenceApi(repo_id=MODEL_ID, token=HF_TOKEN)
 result = api(inputs="Tu entrada aquí")
 print(result)
-

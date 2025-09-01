@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import json
-import os
 from pathlib import Path
 
 # Lee modules.json y genera docker-compose.yml para servicios que tengan Dockerfile
@@ -38,6 +37,7 @@ compose = {
     "services": services
 }
 
+
 def dump_yaml(obj, indent=0):
     sp = "  " * indent
     if isinstance(obj, dict):
@@ -60,6 +60,7 @@ def dump_yaml(obj, indent=0):
         return "\n".join(out)
     else:
         return f"{sp}{obj}"
+
 
 compose_file.write_text(dump_yaml(compose) + "\n")
 print(f"Generado {compose_file} con {len(services)} servicio(s).")
