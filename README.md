@@ -110,3 +110,31 @@ A continuación, una lista curada de repositorios y recursos que puedes clonar o
 - Repositorio UDEM – Microcirugía y cirugía plástica: https://repositorio.udem.edu.mx/browse/title?scope=41da0772-c764-413e-bc05-5eeed137c93a
 
 Sugerencia: Si quieres agregarlos como submódulos, usa el patrón `git submodule add <repo_url> external/<nombre>` y luego `git submodule update --init --recursive` para inicializarlos.
+
+### Repositorios recomendados
+
+- medspacy/medspacy: Procesamiento de lenguaje natural médico en Python.
+  https://github.com/medspacy/medspacy
+- tiangolo/fastapi: Framework moderno para construir APIs rápidas y seguras.
+  https://github.com/tiangolo/fastapi
+- smart-on-fhir/client-py: Cliente Python para APIs FHIR en salud.
+  https://github.com/smart-on-fhir/client-py
+- MIT-LCP/mimic-code: Utilidades y ejemplos para datos clínicos (MIMIC).
+  https://github.com/MIT-LCP/mimic-code
+- openai/openai-node: SDK oficial para integrar OpenAI en Node.js.
+  https://github.com/openai/openai-node
+- huggingface/transformers: Modelos de lenguaje y NLP avanzado.
+  https://github.com/huggingface/transformers
+
+Ejemplo para clonar uno:
+
+```bash
+git clone https://github.com/medspacy/medspacy.git external/medspacy
+```
+
+También puedes agregarlos automáticamente ejecutando:
+
+```bash
+bash scripts/add_submodules.sh
+```
+Lo anterior leerá `modules.json` y añadirá los submódulos configurados en `external/`.

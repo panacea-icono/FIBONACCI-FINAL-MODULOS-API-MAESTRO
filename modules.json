@@ -43,6 +43,29 @@
     "repo": "https://github.com/SurgicalRoboticsUMA/TFG_Duna",
     "path": "external/TFG_Duna",
     "port": 8103
+  },
+  "external_medspacy": {
+    "repo": "https://github.com/medspacy/medspacy",
+    "path": "external/medspacy"
+  },
+  "external_fastapi": {
+    "repo": "https://github.com/tiangolo/fastapi",
+    "path": "external/fastapi"
+  },
+  "external_smart_on_fhir_client_py": {
+    "repo": "https://github.com/smart-on-fhir/client-py",
+    "path": "external/smart-on-fhir-client-py"
+  },
+  "external_mimic_code": {
+    "repo": "https://github.com/MIT-LCP/mimic-code",
+    "path": "external/mimic-code"
+  },
+  "external_openai_node": {
+    "repo": "https://github.com/openai/openai-node",
+    "path": "external/openai-node"
+  },
+  "external_hf_transformers": {
+    "repo": "https://github.com/huggingface/transformers",
+    "path": "external/transformers"
   }
 }
-
