@@ -1,0 +1,51 @@
+{
+  "lab": {
+    "repo": "https://github.com/panacea-icono/fibonacci_lab",
+    "path": "lab",
+    "port": 8001
+  },
+  "external_asistente_medico": {
+    "repo": "https://github.com/elmerpuma/Asistente-Medico-IA",
+    "path": "external/Asistente-Medico-IA",
+    "port": 8100
+  },
+  "external_awesome_ia": {
+    "repo": "https://github.com/IAARhub/awesome-ia",
+    "path": "external/awesome-ia",
+    "port": 8101
+  },
+  "external_simulacion_flujo_hospitalario": {
+    "repo": "https://github.com/OswaldoCG/simulacion-flujo-hospitalario",
+    "path": "external/simulacion-flujo-hospitalario",
+    "port": 8102
+  },
+  "external_tfg_duna": {
+    "repo": "https://github.com/SurgicalRoboticsUMA/TFG_Duna",
+    "path": "external/TFG_Duna",
+    "port": 8103
+  },
+  "external_medspacy": {
+    "repo": "https://github.com/medspacy/medspacy",
+    "path": "external/medspacy"
+  },
+  "external_fastapi": {
+    "repo": "https://github.com/tiangolo/fastapi",
+    "path": "external/fastapi"
+  },
+  "external_smart_on_fhir_client_py": {
+    "repo": "https://github.com/smart-on-fhir/client-py",
+    "path": "external/smart-on-fhir-client-py"
+  },
+  "external_mimic_code": {
+    "repo": "https://github.com/MIT-LCP/mimic-code",
+    "path": "external/mimic-code"
+  },
+  "external_openai_node": {
+    "repo": "https://github.com/openai/openai-node",
+    "path": "external/openai-node"
+  },
+  "external_hf_transformers": {
+    "repo": "https://github.com/huggingface/transformers",
+    "path": "external/transformers"
+  }
+}

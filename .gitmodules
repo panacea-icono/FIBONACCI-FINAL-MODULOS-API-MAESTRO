@@ -1,0 +1,33 @@
+[submodule "lab"]
+	path = lab
+	url = https://github.com/panacea-icono/fibonacci_lab
+[submodule "external/Asistente-Medico-IA"]
+	path = external/Asistente-Medico-IA
+	url = https://github.com/elmerpuma/Asistente-Medico-IA
+[submodule "external/awesome-ia"]
+	path = external/awesome-ia
+	url = https://github.com/IAARhub/awesome-ia
+[submodule "external/simulacion-flujo-hospitalario"]
+	path = external/simulacion-flujo-hospitalario
+	url = https://github.com/OswaldoCG/simulacion-flujo-hospitalario
+[submodule "external/TFG_Duna"]
+	path = external/TFG_Duna
+	url = https://github.com/SurgicalRoboticsUMA/TFG_Duna
+[submodule "external/medspacy"]
+	path = external/medspacy
+	url = https://github.com/medspacy/medspacy
+[submodule "external/fastapi"]
+	path = external/fastapi
+	url = https://github.com/tiangolo/fastapi
+[submodule "external/smart-on-fhir-client-py"]
+	path = external/smart-on-fhir-client-py
+	url = https://github.com/smart-on-fhir/client-py
+[submodule "external/mimic-code"]
+	path = external/mimic-code
+	url = https://github.com/MIT-LCP/mimic-code
+[submodule "external/openai-node"]
+	path = external/openai-node
+	url = https://github.com/openai/openai-node
+[submodule "external/transformers"]
+	path = external/transformers
+	url = https://github.com/huggingface/transformers
