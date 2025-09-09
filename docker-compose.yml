@@ -1,0 +1,20 @@
+version: 3.9
+services:
+  lab:
+    build:
+      context: lab
+    container_name: lab
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - 8001:8001
+  external_asistente_medico:
+    build:
+      context: external/Asistente-Medico-IA
+    container_name: external_asistente_medico
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - 8100:8100
